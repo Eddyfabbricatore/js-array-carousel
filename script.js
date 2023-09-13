@@ -37,6 +37,7 @@ const itemsCollection = document.getElementsByClassName('item');
 // togliamo hide dal primo elemento
 itemsCollection[counterImg].classList.remove('hide');
 
+// al click di btnNext aumentiamo counterImg di 1 per cambiare l'immagine con quella seguente
 btnNext.addEventListener('click', function(){
   itemsCollection[counterImg].classList.add('hide');
 
@@ -47,10 +48,13 @@ btnNext.addEventListener('click', function(){
   btnPrev.classList.remove('hide');
 
   if(counterImg === itemsCollection.length - 1){
-    btnNext.classList.add('hide');
+    itemsCollection[counterImg].classList.add('hide'); //Non si visualizza l'ultima immgagine, da guardare meglio
+    counterImg = 0;
+    itemsCollection[counterImg].classList.remove('hide');
   }
 });
 
+// al click di btnPrev diminuiamo counterImg di 1 per cambiare l'immagine con quella precedente
 btnPrev.addEventListener('click', function(){
   itemsCollection[counterImg].classList.add('hide');
 
