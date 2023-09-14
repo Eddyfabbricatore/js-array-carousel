@@ -43,15 +43,11 @@ btnNext.addEventListener('click', function(){
 
   counterImg++;
 
+  if(counterImg === itemsCollection.length )  counterImg = 0;
+
   itemsCollection[counterImg].classList.remove('hide');
 
   btnPrev.classList.remove('hide');
-
-  if(counterImg === itemsCollection.length - 1){
-    itemsCollection[counterImg].classList.add('hide'); //Non si visualizza l'ultima immgagine, da guardare meglio
-    counterImg = 0;
-    itemsCollection[counterImg].classList.remove('hide');
-  }
 });
 
 // al click di btnPrev diminuiamo counterImg di 1 per cambiare l'immagine con quella precedente
@@ -60,11 +56,9 @@ btnPrev.addEventListener('click', function(){
 
   counterImg--;
 
+  if(counterImg < 0)  counterImg = itemsCollection.length - 1;
+
   itemsCollection[counterImg].classList.remove('hide');
 
   btnNext.classList.remove('hide');
-
-  if(counterImg === 0){
-    btnPrev.classList.add('hide');
-  }
 });
