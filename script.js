@@ -8,13 +8,6 @@
 7. Se ci troviamo alla fine del nostro array aggiungiamo la classe hide al btnNext, mentre se torniamo all'inizio dell'array btnPrev tornerà ad avere la classe hide
 */
 
-// elementi
-const itemsWrapper = document.querySelector('.items-wrapper');
-const btnNext = document.querySelector('.arrow-bottom');
-const btnPrev = document.querySelector('.arrow-top');
-
-btnPrev.classList.add('hide')
-
 const imgs = [
   'img/01.webp',
   'img/02.webp',
@@ -25,40 +18,68 @@ const imgs = [
 
 let counterImg = 0;
 
-// ciclo per stampare le immagini
+// elements
+const itemsWrapper = document.querySelector('.items-wrapper');
+const thumbsWrapper = document.querySelector('.thumbs-wrapper');
+
+// buttons
+const btnNext = document.querySelector('.next');
+const btnPrev = document.querySelector('.prev');
+
+// reset
+itemsWrapper.innerHTML = '';
+thumbsWrapper.innerHTML = '';
+
+// stampo le immagini e le thumb
 for(let i = 0; i < imgs.length; i++){
   const img = imgs[i];
+  itemsWrapper.innerHTML += `
+  <img class="item hide" src="${img}" alt="">`;
 
-  itemsWrapper.innerHTML += `<img src="${img}" class="item hide">`;
+  // creo un nuovo elemento img
+  const thumb = new Image();
+  thumb.src = img;
+  thumb.classList.add('thumb');
+
+  thumbsWrapper.append(thumb);
 }
 
+// prendo tutte le immagini
 const itemsCollection = document.getElementsByClassName('item');
-
-// togliamo hide dal primo elemento
+// mostro la prima immagine
 itemsCollection[counterImg].classList.remove('hide');
 
-// al click di btnNext aumentiamo counterImg di 1 per cambiare l'immagine con quella seguente
+// prendo tutte le thumb
+const thumbsCollection = document.getElementsByClassName('thumb');
+// mostro la prima thumb
+thumbsCollection[counterImg].classList.add('active');
+
+// click next
 btnNext.addEventListener('click', function(){
   itemsCollection[counterImg].classList.add('hide');
 
+  thumbsCollection[counterImg].classList.remove('active');
+
   counterImg++;
 
-  if(counterImg === itemsCollection.length )  counterImg = 0;
+  if(counterImg === imgs.length)  counterImg = 0;
 
   itemsCollection[counterImg].classList.remove('hide');
 
-  btnPrev.classList.remove('hide');
+  thumbsCollection[counterImg].classList.add('active');
 });
 
-// al click di btnPrev diminuiamo counterImg di 1 per cambiare l'immagine con quella precedente
+// click prev
 btnPrev.addEventListener('click', function(){
   itemsCollection[counterImg].classList.add('hide');
 
+  thumbsCollection[counterImg].classList.remove('active');
+
   counterImg--;
 
-  if(counterImg < 0)  counterImg = itemsCollection.length - 1;
+  if(counterImg < 0)  counterImg = imgs.length - 1;
 
   itemsCollection[counterImg].classList.remove('hide');
 
-  btnNext.classList.remove('hide');
+  thumbsCollection[counterImg].classList.add('active');
 });
